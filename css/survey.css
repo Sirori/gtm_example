@@ -1,0 +1,398 @@
+/* 피부 타입 진단 (survey.html) — style.css 의 토큰·헤더·버튼·토스트를 그대로 쓰고 진단 화면만 추가 */
+[hidden] {
+  display: none !important;
+}
+
+.btn--line {
+  border: 1px solid var(--color-line);
+  background: #fff;
+}
+.btn--line:hover {
+  background: var(--color-gray);
+}
+
+.sv {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100dvh - var(--header-h));
+  padding: 40px 16px 80px;
+}
+.sv-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 560px;
+  animation: sv-in 0.3s ease;
+}
+@keyframes sv-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-screen {
+    animation: none;
+  }
+}
+.sv-screen .barea {
+  width: 100%;
+  max-width: none;
+}
+
+/* Intro */
+.sv-intro {
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+.sv-intro__title {
+  font-size: clamp(30px, 5vw, 44px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+.sv-intro__desc {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--color-ink-soft);
+}
+.sv-intro__meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin: 12px 0 20px;
+}
+.sv-intro__meta li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-brand-soft);
+}
+.sv-intro__meta strong {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-brand-deep);
+}
+.sv-intro__meta span {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+}
+
+/* Question */
+.sv-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.sv-progress__bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-line);
+  overflow: hidden;
+}
+.sv-progress__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-brand);
+  transition: width 0.3s ease;
+}
+.sv-progress__count {
+  font-size: 14px;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+.sv-progress__count strong {
+  color: var(--color-ink);
+}
+.sv-q__no {
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-brand-deep);
+}
+.sv-q__title {
+  font-size: clamp(22px, 3.6vw, 30px);
+  font-weight: 800;
+  line-height: 1.4;
+  white-space: pre-line;
+  outline: none;
+}
+.sv-q__hint {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--color-muted);
+}
+.sv-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+}
+.sv-option {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  padding: 16px 20px;
+  border: 2px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: left;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+/* 터치 기기에선 누른 뒤에도 hover 가 남아 선택된 것처럼 보이므로 마우스 환경에서만 */
+@media (hover: hover) {
+  .sv-option:hover {
+    border-color: var(--color-sky);
+    background: #fafeff;
+  }
+}
+.sv-option:active {
+  transform: scale(0.99);
+}
+.sv-option[aria-pressed="true"] {
+  border-color: var(--color-brand);
+  background: var(--color-brand-soft);
+  color: var(--color-brand-deep);
+}
+/* 복수 응답: 체크박스 표시 */
+.sv-options--multi .sv-option {
+  gap: 12px;
+}
+.sv-options--multi .sv-option::before {
+  content: "";
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-line);
+  border-radius: 6px;
+  background: #fff center / 14px no-repeat;
+}
+.sv-options--multi .sv-option[aria-pressed="true"]::before {
+  border-color: var(--color-brand);
+  background-color: var(--color-brand);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' d='M3 8.5l3.2 3L13 4.5'/%3E%3C/svg%3E");
+}
+.sv-next {
+  margin-top: 24px;
+}
+.sv-next button:disabled {
+  background: var(--color-line);
+  color: var(--color-muted);
+  cursor: default;
+  transform: none;
+}
+.sv-back {
+  align-self: flex-start;
+  margin-top: 28px;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  font-size: 15px;
+  color: var(--color-muted);
+}
+.sv-back:hover {
+  color: var(--color-ink);
+}
+
+/* Result */
+.sv-result {
+  gap: 20px;
+}
+.sv-result__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 36px 24px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-brand-soft), #eef5ff);
+  text-align: center;
+}
+.sv-result__eyebrow {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-brand-deep);
+}
+.sv-result__type {
+  font-size: clamp(32px, 6vw, 46px);
+  font-weight: 900;
+  outline: none;
+}
+.sv-result__summary {
+  font-size: 16px;
+  color: var(--color-ink-soft);
+}
+.sv-card {
+  padding: 28px 24px;
+  border-radius: var(--radius);
+  background: var(--color-gray);
+}
+.sv-card__tit {
+  margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: 800;
+}
+.sv-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sv-bars li {
+  display: grid;
+  grid-template-columns: 56px 1fr 40px;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+.sv-bars__track {
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  overflow: hidden;
+}
+.sv-bars__track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-sky);
+}
+.sv-bars__pct {
+  text-align: right;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+.sv-bars li.is-top {
+  font-weight: 800;
+}
+.sv-bars li.is-top .sv-bars__track span {
+  background: var(--color-brand-deep);
+}
+.sv-bars li.is-top .sv-bars__pct {
+  color: var(--color-ink);
+}
+.sv-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  font-size: 15px;
+}
+.sv-tips li {
+  list-style: decimal;
+}
+.sv-tips__tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 8px;
+  border-radius: 6px;
+  background: var(--color-brand-deep);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  vertical-align: 1px;
+}
+.sv-reco {
+  margin-top: 20px;
+}
+.sv-reco .subtit {
+  text-align: center;
+}
+/* 타입 추천과 고민 추천이 같은 제품이면 한 장만 가운데에 */
+.sv-reco .goods__item:only-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 280px);
+}
+.goods__reason {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-brand-deep);
+}
+.sv-kit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  padding: 32px 24px 24px;
+  border-radius: var(--radius);
+  background: var(--color-deep);
+  color: #fff;
+  text-align: center;
+}
+.sv-kit__key {
+  font-size: 14px;
+  color: var(--color-sky);
+}
+.sv-kit__tit {
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 800;
+}
+.sv-kit .barea button {
+  background: #fff;
+  color: var(--color-ink);
+}
+.sv-kit .barea button:hover {
+  background: var(--color-brand-soft);
+}
+.sv-kit .barea button:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: default;
+  transform: none;
+}
+.sv-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.sv-actions a,
+.sv-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+.sv-actions a {
+  grid-column: 1 / -1;
+  border: 2px solid var(--color-ink);
+}
+.sv-actions a:hover,
+.sv-actions button:hover {
+  background: var(--color-gray);
+}
+
+@media (max-width: 599px) {
+  .sv {
+    padding: 28px 16px 64px;
+  }
+  .sv-progress {
+    margin-bottom: 32px;
+  }
+  .sv-option {
+    min-height: 58px;
+    font-size: 16px;
+  }
+  .goods {
+    gap: 24px 12px;
+  }
+}

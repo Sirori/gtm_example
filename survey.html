@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>셀라딕스 | 1분 피부 타입 진단</title>
+<meta name="description" content="10개 이내의 질문으로 알아보는 나의 피부 타입. 진단 결과에 맞는 셀라딕스 제품을 추천해 드려요.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/survey.css">
+
+<!-- Google Tag Manager -->
+<!-- TODO: GTM-XXXXXXX 를 실제 GTM 컨테이너 ID로 교체하세요 -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="header">
+  <div class="header__inner">
+    <a href="index.html" class="logo" data-gtm-click="nav_logo" data-gtm-section="survey_header" data-gtm-label="로고">CELLADIX</a>
+    <a href="index.html" class="btn btn--sm btn--line"
+       data-gtm-click="survey_close" data-gtm-section="survey_header" data-gtm-label="기획전으로 돌아가기">기획전으로</a>
+  </div>
+</header>
+
+<!-- 화면은 survey.js 가 URL 해시(#intro, #q1~#q9, #result)에 맞춰 하나씩 보여준다 -->
+<main class="sv">
+
+  <!-- INTRO -->
+  <section class="sv-screen sv-intro" data-screen="intro" hidden>
+    <strong class="htit__key">1분 피부 타입 진단</strong>
+    <h1 class="sv-intro__title">내 피부, 제대로<br>알고 계신가요?</h1>
+    <p class="sv-intro__desc">질문에 답하면 피부 타입과 맞춤 제품을 알려드려요.<br>진단을 마치면 샘플 키트도 신청할 수 있어요.</p>
+    <ul class="sv-intro__meta">
+      <li><strong>10개 이내</strong><span>질문</span></li>
+      <li><strong>1분</strong><span>소요 시간</span></li>
+      <li><strong>무료</strong><span>샘플 키트</span></li>
+    </ul>
+    <div class="barea">
+      <button type="button" id="svStart"><strong>진단 시작하기</strong></button>
+    </div>
+  </section>
+
+  <!-- QUESTION (질문 하나를 이 틀에 채워 넣는다) -->
+  <section class="sv-screen sv-question" data-screen="question" hidden>
+    <div class="sv-progress">
+      <div class="sv-progress__bar" role="progressbar" aria-label="진단 진행률" aria-valuemin="0" id="svProgress">
+        <span id="svBar"></span>
+      </div>
+      <p class="sv-progress__count"><strong id="svStepNo">1</strong> / <span id="svStepTotal">8</span></p>
+    </div>
+    <p class="sv-q__no" id="svQNo">Q1</p>
+    <h1 class="sv-q__title" id="svQTitle" tabindex="-1"></h1>
+    <p class="sv-q__hint" id="svQHint"></p>
+    <div class="sv-options" id="svOptions" role="group" aria-labelledby="svQTitle"></div>
+    <!-- 복수 응답 질문에서만 보인다 -->
+    <div class="barea sv-next" id="svNextWrap" hidden>
+      <button type="button" id="svNext" disabled><strong>1개 이상 골라주세요</strong></button>
+    </div>
+    <button type="button" class="sv-back" id="svBack">← 이전 질문</button>
+  </section>
+
+  <!-- RESULT -->
+  <section class="sv-screen sv-result" data-screen="result" hidden>
+    <div class="sv-result__head">
+      <p class="sv-result__eyebrow">나의 피부 타입은</p>
+      <h1 class="sv-result__type" id="svType" tabindex="-1"></h1>
+      <p class="sv-result__summary" id="svSummary"></p>
+    </div>
+
+    <div class="sv-card">
+      <h2 class="sv-card__tit">피부 타입 분석</h2>
+      <ul class="sv-bars" id="svBars"></ul>
+    </div>
+
+    <div class="sv-card">
+      <h2 class="sv-card__tit">이렇게 관리해 보세요</h2>
+      <ol class="sv-tips" id="svTips"></ol>
+    </div>
+
+    <div class="sv-reco">
+      <h2 class="subtit">나에게 맞는 추천 제품</h2>
+      <div class="goods" id="svReco"></div>
+    </div>
+
+    <div class="sv-kit">
+      <p class="sv-kit__key">진단 완료 고객 한정</p>
+      <p class="sv-kit__tit">트러블 케어 샘플 키트 무료 신청</p>
+      <div class="barea">
+        <button type="button" id="svKit"
+                data-gtm-click="sample_kit_apply" data-gtm-section="survey_result" data-gtm-label="샘플 키트 신청"><strong>샘플 키트 신청하기</strong></button>
+      </div>
+    </div>
+
+    <div class="sv-actions">
+      <a href="index.html#area04"
+         data-gtm-click="survey_to_coupon" data-gtm-section="survey_result" data-gtm-label="기획전 쿠폰 받기">기획전 15% 쿠폰 받기</a>
+      <button type="button" id="svShare"
+              data-gtm-click="survey_share" data-gtm-section="survey_result" data-gtm-label="결과 공유하기">결과 공유하기</button>
+      <button type="button" id="svRetry"
+              data-gtm-click="survey_retry" data-gtm-section="survey_result" data-gtm-label="다시 진단하기">다시 진단하기</button>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/gtm-tracking.js"></script>
+<script src="js/survey.js"></script>
+</body>
+</html>
